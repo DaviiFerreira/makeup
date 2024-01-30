@@ -29,6 +29,17 @@
             display: flex;
             flex-direction: column;
         }
+
+        .trail {
+            background-color: rgb(0, 0, 0);
+            opacity: 0.001;
+            border-radius: 50%;
+            height: 3vh;
+            width: 3vh;
+            position: absolute;
+            transform-origin: left center;
+            transition: transform 0.2s ease-out;
+        }
     </style>
 </head>
 
@@ -37,10 +48,12 @@
     </div>
     <div id="controles">
         <label for="cor">Cor:</label>
-        <input type="color" id="cor" value="(0,0,0,0)">
+        <input type="color" id="cor" value="#000000">
 
         <label for="transparencia">Transparência:</label>
-        <input type="range" id="transparencia" min="0" max="1" step="0.01" value="1">
+        <input type="range" id="transparencia" min="0" max="0.5" step="0.00005" value="0.005">
+        <label for="tamanho">tamanho:</label>
+        <input type="range" id="tamanho" min="0.05" max="5" step="0.01" value="1">
     </div>
 </body>
 
