@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     corInput.addEventListener('input', atualizarEstilo);
     transparenciaInput.addEventListener('input', atualizarEstilo);
     tamanhoInput.addEventListener('input', atualizarEstilo);
-
-    var numeroDeTrails = 0;
+    borrachaInput.addEventListener('input', atualizarEstilo);
     function atualizarEstilo() {
         cor = corInput.value;
         borracha = borrachaInput.checked;
@@ -34,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     fundo.addEventListener("mousemove", function (event) {
-        if (desenhando) {
+        if (desenhando && borracha == false) {
             var trail = document.createElement('div');
             trail.classList.add('trail');
             trail.style.position = 'absolute';
@@ -46,7 +45,24 @@ document.addEventListener('DOMContentLoaded', function () {
             trail.style.opacity = transparencia;
             fundo.appendChild(trail);
             todosTrails.push(trail);
-            numeroDeTrails++;
+        }
+        if (desenhando && borracha == true) {
+            for (var i = 0; i < todosTrails.length; i++) {
+                if ((+event.clientX + +tamanho >= +(todosTrails[i].style.left).slice(0, -2) - +(todosTrails[i].style.height).slice(0, -2))) {
+                    if ((+event.clientX - +tamanho <= +(todosTrails[i].style.left).slice(0, -2) + +(todosTrails[i].style.height).slice(0, -2))) {
+                        if (+event.clientY + +tamanho >= +(todosTrails[i].style.top).slice(0, -2) - +(todosTrails[i].style.height).slice(0, -2)) {
+                            console.log("entrou no if");
+                            if (+event.clientY - +tamanho <= +(todosTrails[i].style.top).slice(0, -2) + +(todosTrails[i].style.height).slice(0, -2)) {
+                                fundo.removeChild(todosTrails[i]);
+                                todosTrails.splice(i, 1)
+                                console.log("entrou no if 2");
+                            }
+                        }
+
+                    }
+
+                }
+            }
         }
     });
 
