@@ -3,14 +3,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const corInput = document.getElementById('cor');
     const transparenciaInput = document.getElementById('transparencia');
     const tamanhoInput = document.getElementById('tamanho');
+    var borrachaInput = document.getElementById('borracha');
     var desenhando = 0;
+    var todosTrails = [];
     corInput.addEventListener('input', atualizarEstilo);
     transparenciaInput.addEventListener('input', atualizarEstilo);
     tamanhoInput.addEventListener('input', atualizarEstilo);
+
     var numeroDeTrails = 0;
     function atualizarEstilo() {
         cor = corInput.value;
-        console.log(cor);
+        borracha = borrachaInput.checked;
+        console.log(borracha);
         transparencia = transparenciaInput.value;
         tamanho = tamanhoInput.value;
     };
@@ -41,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             trail.style.width = tamanho + "vh";
             trail.style.opacity = transparencia;
             fundo.appendChild(trail);
+            todosTrails.push(trail);
             numeroDeTrails++;
         }
     });
