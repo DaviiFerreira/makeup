@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const tamanhoInput = document.getElementById('tamanho');
     var borrachaInput = document.getElementById('borracha');
     var desenhando = 0;
+    var cor;
+    var borracha;
+    var tamanho;
     var todosTrails = [];
     corInput.addEventListener('input', atualizarEstilo);
     transparenciaInput.addEventListener('input', atualizarEstilo);
@@ -17,6 +20,34 @@ document.addEventListener('DOMContentLoaded', function () {
         transparencia = transparenciaInput.value;
         tamanho = tamanhoInput.value;
     };
+    function addTrail(event) {
+        var trail = document.createElement('div');
+        trail.classList.add('trail');
+        trail.style.position = 'absolute';
+        trail.style.left = event.clientX + 'px';
+        trail.style.top = event.clientY + 'px';
+        trail.style.background = cor;
+        trail.style.height = tamanho + "vh";
+        trail.style.width = tamanho + "vh";
+        trail.style.opacity = transparencia;
+        fundo.appendChild(trail);
+        todosTrails.push(trail);
+    };
+    function Apaga(event) {
+        for (var i = 0; i < todosTrails.length; i++) {
+            if ((+event.clientX + +tamanho >= +(todosTrails[i].style.left).slice(0, -2) - +(todosTrails[i].style.height).slice(0, -2)) &&
+                ((+event.clientX - +tamanho <= +(todosTrails[i].style.left).slice(0, -2) + +(todosTrails[i].style.height).slice(0, -2))) &&
+                (+event.clientY + +tamanho >= +(todosTrails[i].style.top).slice(0, -2) - +(todosTrails[i].style.height).slice(0, -2)) &&
+                (+event.clientY - +tamanho <= +(todosTrails[i].style.top).slice(0, -2) + +(todosTrails[i].style.height).slice(0, -2))) {
+
+                fundo.removeChild(todosTrails[i]);
+                todosTrails.splice(i, 1)
+
+            }
+
+        }
+    }
+
     fundo.addEventListener("mousedown", function (event) {
         if (event.button === 0) {
             desenhando = 1;
@@ -33,37 +64,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     fundo.addEventListener("mousemove", function (event) {
-        if (desenhando && borracha == false) {
-            var trail = document.createElement('div');
-            trail.classList.add('trail');
-            trail.style.position = 'absolute';
-            trail.style.left = event.clientX + 'px';
-            trail.style.top = event.clientY + 'px';
-            trail.style.background = cor;
-            trail.style.height = tamanho + "vh";
-            trail.style.width = tamanho + "vh";
-            trail.style.opacity = transparencia;
-            fundo.appendChild(trail);
-            todosTrails.push(trail);
-        }
-        if (desenhando && borracha == true) {
-            for (var i = 0; i < todosTrails.length; i++) {
-                if ((+event.clientX + +tamanho >= +(todosTrails[i].style.left).slice(0, -2) - +(todosTrails[i].style.height).slice(0, -2))) {
-                    if ((+event.clientX - +tamanho <= +(todosTrails[i].style.left).slice(0, -2) + +(todosTrails[i].style.height).slice(0, -2))) {
-                        if (+event.clientY + +tamanho >= +(todosTrails[i].style.top).slice(0, -2) - +(todosTrails[i].style.height).slice(0, -2)) {
-                            console.log("entrou no if");
-                            if (+event.clientY - +tamanho <= +(todosTrails[i].style.top).slice(0, -2) + +(todosTrails[i].style.height).slice(0, -2)) {
-                                fundo.removeChild(todosTrails[i]);
-                                todosTrails.splice(i, 1)
-                                console.log("entrou no if 2");
-                            }
-                        }
-
-                    }
-
-                }
+        if (desenhando) {
+            if (borracha == false) {
+                addTrail(event);
+            }
+            if (borracha == true) {
+                Apaga(event);
             }
         }
-    });
+    }
+    );
 
 });
