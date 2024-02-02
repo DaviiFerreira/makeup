@@ -16,7 +16,7 @@
         #fundo {
             width: 100vw;
             height: 100vh;
-            background: url('Fundo.jpeg');
+            background: url('Fundo1.jpeg');
             background-position: center center;
             background-size: cover;
         }
@@ -40,10 +40,22 @@
             transform-origin: left center;
             transition: transform 0.2s ease-out;
         }
+
+        .cursor {
+            width: 1vh;
+            height: 1vh;
+            border: 2px solid #000;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+        }
     </style>
 </head>
 
 <body>
+    <div class="cursor"></div>
     <div id="fundo">
     </div>
     <div id="controles">
@@ -56,6 +68,26 @@
         <input type="range" id="tamanho" min="0.05" max="5" step="0.01" value="1">
         <label for="borracha">borracha:</label>
         <input type="checkbox" id="borracha">
+        <label for="TrocaFundo">Mude a face:</label>
+        <select id="TrocaFundo">
+            <option value="1">Face 1</option>
+            <option value="2">Face 2</option>
+            <option value="3">Face 3</option>
+            <option value="4">Face 4</option>
+            <option value="5">Face 5</option>
+            <option value="6">Face 6</option>
+            <option value="7">Face 7</option>
+            <option value="8">Face 8</option>
+            <option value="9">Face 9</option>
+            <option value="10">Face 10</option>
+            <option value="11">Face 11</option>
+            <option value="12">Face 12</option>
+            <option value="13">Face 13</option>
+            <option value="14">Face 14</option>
+            <option value="15">Face 15</option>
+            <option value="16">Face 16</option>
+            <option value="17">Face 17</option>
+        </select>
     </div>
 </body>
 

@@ -2,17 +2,40 @@ document.addEventListener('DOMContentLoaded', function () {
     const fundo = document.getElementById('fundo');
     const corInput = document.getElementById('cor');
     const transparenciaInput = document.getElementById('transparencia');
+    const trocaFundo = document.getElementById('TrocaFundo');
     const tamanhoInput = document.getElementById('tamanho');
     var borrachaInput = document.getElementById('borracha');
     var desenhando = 0;
     var cor;
     var borracha;
-    var tamanho;
+    var tamanho = 1;
+    var transparencia;
     var todosTrails = [];
+    const cursor = document.querySelector('.cursor');
     corInput.addEventListener('input', atualizarEstilo);
     transparenciaInput.addEventListener('input', atualizarEstilo);
     tamanhoInput.addEventListener('input', atualizarEstilo);
     borrachaInput.addEventListener('input', atualizarEstilo);
+    trocaFundo.addEventListener('change', trocadorDeFundo);
+    function trocadorDeFundo() {
+        // Obter o valor selecionado
+        var fundoSelecionado = trocaFundo.value;
+        console.log(trocaFundo.value);
+
+        // Mudar o fundo da página
+        // Adicionar um parâmetro de consulta único para evitar o cache
+        var timestamp = new Date().getTime();
+        var urlFundo = 'url(Fundo' + fundoSelecionado + '.jpeg' + '?' + timestamp + ')';
+        fundo.style.backgroundImage = urlFundo;
+        while (todosTrails.length) {
+            fundo.removeChild(todosTrails[0]);
+            todosTrails.splice(0, 1)
+        }
+
+    };
+    document.addEventListener('mouseout', function () {
+        cursor.style.transition = 'transform 0.15s ease'; // Adicionar a transição de volta
+    });
     function atualizarEstilo() {
         cor = corInput.value;
         borracha = borrachaInput.checked;
@@ -63,7 +86,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
     });
+    document.addEventListener("mousemove", function () {
+        cursor.style.transition = 'none';
+        cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+        cursor.style.height = tamanho + 'vh';
+        cursor.style.width = tamanho + 'vh';
+        cursor.style.border = "2px solid " + cor;
+    });
     fundo.addEventListener("mousemove", function (event) {
+
         if (desenhando) {
             if (borracha == false) {
                 addTrail(event);
